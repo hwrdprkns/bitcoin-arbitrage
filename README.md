@@ -52,5 +52,5 @@ crontab -e
 
 Set every 5 minutes
 ```sh
-*/5 * * * * /usr/local/bin/node /home/steve/example/script.js
+*/5 * * * * /usr/local/bin/node /home/steve/bitcoin-arbitrage/index.js
 ```
