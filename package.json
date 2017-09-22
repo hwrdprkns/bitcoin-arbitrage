@@ -1,0 +1,17 @@
+{
+  "name": "bitcoin-arbritrage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bitstamp": "^1.0.3",
+    "dotenv": "^4.0.0",
+    "kraken-api": "^1.0.0",
+    "twit": "^2.2.9"
+  }
+}
