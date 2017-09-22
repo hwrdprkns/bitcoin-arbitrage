@@ -18,3 +18,39 @@ This script pulles the exchange rates of BTCEUR (or a list of currencies you wan
 - You need to have two verified accounts in both (or how many exchange you want to do arbitrage on)
 - Both accounts (or more) must have funds (BTC, EUR or whatever assets you want to arbitrage on)
 - The spread can change quickly, but the transactions can get approved with dealy which would cause you potential losses
+
+### Setup the bot
+
+In order to get started you just have to:
+
+Download
+
+```sh
+git clone github.com/0x13a/bitcoin-arbitrage
+```
+
+Install the project
+```sh
+cd bitcoin-arbitrage
+npm install
+```
+
+Setup the twitter api keys (get the api keys from [here](https://apps.twitter.com/)) and the assets pairs you want to watch
+```sh
+PAIRS=BTCEUR,ETHEUR
+TWITTER_ACCESS_TOKEN=whatever
+TWITTER_ACCESS_TOKEN_SECRET=whatever
+TWITTER_CONSUMER_KEY=whatever
+TWITTER_CONSUMER_SECRET=whatever
+TWITTER_USERNAME=0x13a
+```
+
+Setup the cronjob
+```sh
+crontab -e
+```
+
+Set every 5 minutes
+```sh
+*/5 * * * * /usr/local/bin/node /home/steve/example/script.js
+```
