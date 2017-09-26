@@ -40,12 +40,13 @@ const t = new Twitter({
     }
 })();
 
-// given a currency pair calculate the spread in the two exchanges 
+// given a currency pair calculate the spread in the two exchanges
 // returned in percentage points
 async function calculateSpread(pair) {
+    const krakenPromise = kraken.api('Ticker', { pair : formatToKrakenPair(pair) });
+    const bitstampPromise = asyncBitstampTicker(pair);
     // Get Ticker Info
-    const krakenResponse = await kraken.api('Ticker', { pair : formatToKrakenPair(pair) });
-    const bitstampResponse = await asyncBitstampTicker(pair);
+    const [krakenResponse, bitstampResponse] = await Promise.all([krakenPromise, bitstampPromise])
     const krakenPrice = krakenResponse['result'][formatToKrakenPair(pair)]['a'][0];
     const bitstampPrice = bitstampResponse['ask'];
     // get lower / higher price
