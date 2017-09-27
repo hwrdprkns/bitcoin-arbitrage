@@ -10,7 +10,7 @@ Now I am Bob and I want to buy 1 BTC in the exchange A, the price in there is 1B
 
 > Arbitrage is the simultaneous purchase and sale of an asset to profit from a difference in the price. It is a trade that profits by exploiting the price differences of identical or similar financial instruments on different markets or in different forms. Arbitrage exists as a result of market inefficiencies. -- [Investopedia](http://www.investopedia.com/terms/a/arbitrage.asp#ixzz4tS44jciY)
 
-An Example of BTC price in two different exchanges
+An Example of BTC price in two different exchanges. Basically with this lambda function we look at the price difference between the red and the blue line. When this difference is large enough (like 3%), we buy a fixed sum in the red exchange and we sell on the blue exchange.
 
 ![](image.png)
 
