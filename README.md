@@ -1,6 +1,6 @@
-## Bitcoin Arbitrage
+## An AWS Lambda function that does Bitcoin Arbitrage
 
-This is a simple script that finds interesting arbitrage opportunities for cryptocurrencies. At the moment there are only two exchanges with relatively different volumes ([Kraken](https://kraken.com) and [BitStamp](https://bitstamp/com))
+This is a simple AWS Lambda function that finds interesting arbitrage opportunities for cryptocurrencies. At the moment there are only two exchanges with relatively different volumes ([Kraken](https://kraken.com) and [BitStamp](https://bitstamp/com)). It runs every 10 (you can setup your interval) minutes.
 
 ### What is arbitrage
 
@@ -8,49 +8,77 @@ In order to buy/sell cryptocurrencies we need to be in a market. This market is 
 
 Now I am Bob and I want to buy 1 BTC in the exchange A, the price in there is 1BTC=3672$. I am Bob and I can also buy 1 BTC on exchange B, the price in there is 1BTC=3630$. Now what I can do is buying 1 BTC at exchange B and sell the same 1BTC at exchange A. This is called arbitrage.
 
-> Arbitrage is the simultaneous purchase and sale of an asset to profit from a difference in the price. It is a trade that profits by exploiting the price differences of identical or similar financial instruments on different markets or in different forms. Arbitrage exists as a result of market inefficiencies. -- [Investopedia](http://www.investopedia.com/terms/a/arbitrage.asp#ixzz4tS44jciY) 
+> Arbitrage is the simultaneous purchase and sale of an asset to profit from a difference in the price. It is a trade that profits by exploiting the price differences of identical or similar financial instruments on different markets or in different forms. Arbitrage exists as a result of market inefficiencies. -- [Investopedia](http://www.investopedia.com/terms/a/arbitrage.asp#ixzz4tS44jciY)
 
-### What this script does
+An Example of BTC price in two different exchanges
 
-This script pulles the exchange rates of BTCEUR (or a list of currencies you want) every 5 minutes and whenever it detects a spread of at least 2% between the two rates it alerts you with a direct message. (it will be able to buy soon)
+![](image.png)
+
+### What this lambda function does
+
+This script pulles the exchange rates of BTCEUR (or a list of currencies you want) every 10 minutes and whenever it detects a spread of at least 3% (you can choose your spread level) between the two rates it tries to buy on the cheapest exchange and sell on the more expensive one. It will text you in case of success (or failure)
 
 ### Assumptions and constraints
 - You need to have two verified accounts in both (or how many exchange you want to do arbitrage on)
 - Both accounts (or more) must have funds (BTC, EUR or whatever assets you want to arbitrage on)
 - The spread can change quickly, but the transactions can get approved with dealy which would cause you potential losses
 
-### Setup the bot
+### Setup the function
 
-In order to get started you just have to:
-
-Download
+In order to get started you just have to use [serverless](serverless.com)
 
 ```sh
-git clone github.com/0x13a/bitcoin-arbitrage
+$ serverless install --url https://github.com/0x13a/bitcoin-arbitrage --name my-btc-arbitrage
 ```
 
-Install the project
+In order to deploy to your AWS Lambda function (or other serverless platform if you like) you need to follow this guide [https://serverless.com/framework/docs/providers/aws/guide/functions/](https://serverless.com/framework/docs/providers/aws/guide/functions/). Sorry, if for the moment it looks too cumbersome to configure, i will make a better readme.
+
+### Configuration file
+
+This is an example of configuration file for `serverless.yml`. In my case I've used [kraken](https://kraken.com) and [Bitstamp](https://bitstamp.com). So you will need to recover API access keys from there in order to automate the trades.
+
+Unless you want to use this in another serverless service (Google Cloud Functions, IBM OpenWhisks, etc). You need to configure your AWS Lambda function to access your Amazon SNS.
+
 ```sh
-cd bitcoin-arbitrage
-npm install
+service: bitcoin-arbitrage
+
+# Use the serverless-webpack plugin to transpile ES6
+plugins:
+  - serverless-webpack
+
+# Enable auto-packing of external modules
+custom:
+  webpackIncludeModules: true
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+          - "sns:Publish"
+          - "sns:Subscribe"
+      Resource: { "Fn::Join" : ["", ["arn:aws:sns:${aws-region}:", { "Ref" : "${aws-account-id}" }, ":${aws-arn}" ] ]  }
+
+functions:
+  watch:
+    handler: handler.watch
+    environment:
+        KRAKEN_KEY: ${kraken-key}
+        KRAKEN_SECRET: ${kraken-secret}
+        BITSTAMP_KEY: ${bitstamp-key}
+        BITSTAMP_SECRET: ${bitstamp-secret}
+        BITSTAMP_CLIENT_ID: ${bitstamp-client-id}
+        ASSET: BTCEUR
+        AMOUNT: 100EUR
+        SNS_TOPIC_ARN: ${sns-topic-arn}
+        SNS_REGION: ${sns-region}
+        SPREAD_THRESHOLD: "3"
+    events:
+        - schedule: cron(10 * * * ? *)
+    timeout: 50
 ```
 
-Setup the twitter api keys (get the api keys from [here](https://apps.twitter.com/)) and the assets pairs you want to watch
-```sh
-PAIRS=BTCEUR,ETHEUR
-TWITTER_ACCESS_TOKEN=whatever
-TWITTER_ACCESS_TOKEN_SECRET=whatever
-TWITTER_CONSUMER_KEY=whatever
-TWITTER_CONSUMER_SECRET=whatever
-TWITTER_USERNAME=0x13a
-```
+### It text you when something goes wrong or when you make profit
 
-Setup the cronjob
-```sh
-crontab -e
-```
-
-Set every 5 minutes
-```sh
-*/5 * * * * /usr/local/bin/node /home/steve/bitcoin-arbitrage/index.js
-```
+Thanks to the integration of [Amazon SNS](https://aws.amazon.com/sns) the lambda function communicate with the amazon notification systema and it's able to send you a text message when something goes wrong or when the function succeed to make a profitable arbitrage operation
