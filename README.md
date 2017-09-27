@@ -88,10 +88,7 @@ Thanks to the integration of [Amazon SNS](https://aws.amazon.com/sns) the lambda
 ===
 
 If you are bored and you don't know what to do, or you just liked my little project, this is my BTC address: **1DBMmqMSCHuSxUdQkKJQFJVXR4HiVpuXH9**
-<<<<<<< HEAD
 
 ### Disclaimer
 
 Past performance is not necessarily indicative of future results. Use this software at your own risk.
-=======
->>>>>>> a4075ac6880530e055cd9b573d2fab22d02d7e1d
