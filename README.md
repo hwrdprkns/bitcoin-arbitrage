@@ -25,6 +25,10 @@ This script pulles the exchange rates of BTCEUR (or a list of currencies you wan
 - Both accounts (or more) must have funds (BTC, EUR or whatever assets you want to arbitrage on)
 - The spread can change quickly, but the transactions can get approved with dealy which would cause you potential losses
 
+### Disclaimer
+
+Past performance is not necessarily indicative of future results. Use this software at your own risk.
+
 ### Setup the function
 
 In order to get started you just have to use [serverless](serverless.com)
@@ -88,7 +92,3 @@ Thanks to the integration of [Amazon SNS](https://aws.amazon.com/sns) the lambda
 ===
 
 If you are bored and you don't know what to do, or you just liked my little project, this is my BTC address: **1DBMmqMSCHuSxUdQkKJQFJVXR4HiVpuXH9**
-
-### Disclaimer
-
-Past performance is not necessarily indicative of future results. Use this software at your own risk.
