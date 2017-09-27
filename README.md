@@ -1,4 +1,4 @@
-## An AWS Lambda function that does Bitcoin Arbitrage
+## An AWS Lambda function that looks for Bitcoin Arbitrage opportunities
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) [![chat](https://badges.gitter.im/bitcoin-arbitrage/Lobby.svg)](https://gitter.im/bitcoin-arbitrage/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -88,7 +88,10 @@ Thanks to the integration of [Amazon SNS](https://aws.amazon.com/sns) the lambda
 ===
 
 If you are bored and you don't know what to do, or you just liked my little project, this is my BTC address: **1DBMmqMSCHuSxUdQkKJQFJVXR4HiVpuXH9**
+<<<<<<< HEAD
 
 ### Disclaimer
 
 Past performance is not necessarily indicative of future results. Use this software at your own risk.
+=======
+>>>>>>> a4075ac6880530e055cd9b573d2fab22d02d7e1d
