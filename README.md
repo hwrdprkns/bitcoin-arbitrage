@@ -1,6 +1,8 @@
 ## An AWS Lambda function that does Bitcoin Arbitrage
 
-This is a simple AWS Lambda function that finds interesting arbitrage opportunities for cryptocurrencies. At the moment there are only two exchanges with relatively different volumes ([Kraken](https://kraken.com) and [BitStamp](https://bitstamp/com)). It runs every 10 (you can setup your interval) minutes.
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) [![chat](https://badges.gitter.im/bitcoin-arbitrage/Lobby.svg)](https://gitter.im/bitcoin-arbitrage/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+This is a simple **AWS Lambda function** that finds interesting **arbitrage opportunities for cryptocurrencies**. At the moment there are only two exchanges with relatively different volumes ([Kraken](https://kraken.com) and [BitStamp](https://bitstamp/com)). It runs every 10 (you can setup your interval) minutes.
 
 ### What is arbitrage
 
@@ -86,3 +88,7 @@ Thanks to the integration of [Amazon SNS](https://aws.amazon.com/sns) the lambda
 ===
 
 If you are bored and you don't know what to do, or you just liked my little project, this is my BTC address: **1DBMmqMSCHuSxUdQkKJQFJVXR4HiVpuXH9**
+
+### Disclaimer
+
+Past performance is not necessarily indicative of future results. Use this software at your own risk.
