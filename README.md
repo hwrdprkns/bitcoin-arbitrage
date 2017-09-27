@@ -1,4 +1,4 @@
-## An AWS Lambda function that does Bitcoin Arbitrage
+## An AWS Lambda function that looks for Bitcoin Arbitrage opportunities
 
 This is a simple AWS Lambda function that finds interesting arbitrage opportunities for cryptocurrencies. At the moment there are only two exchanges with relatively different volumes ([Kraken](https://kraken.com) and [BitStamp](https://bitstamp/com)). It runs every 10 (you can setup your interval) minutes.
 
