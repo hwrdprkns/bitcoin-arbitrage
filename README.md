@@ -82,3 +82,7 @@ functions:
 ### It text you when you make profit or when something goes wrong
 
 Thanks to the integration of [Amazon SNS](https://aws.amazon.com/sns) the lambda function communicate with the amazon notification systema and it's able to send you a text message when something goes wrong or when the function succeed to make a profitable arbitrage operation
+
+===
+
+If you are bored and you don't know what to do, or you just liked my little project, this is my BTC address: **1DBMmqMSCHuSxUdQkKJQFJVXR4HiVpuXH9**
