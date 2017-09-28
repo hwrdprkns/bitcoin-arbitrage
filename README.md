@@ -31,7 +31,7 @@ Past performance is not necessarily indicative of future results. Use this softw
 
 ### Setup the function
 
-In order to get started you just have to use [serverless](serverless.com)
+In order to get started you just have to use [serverless](http://serverless.com)
 
 ```sh
 $ serverless install --url https://github.com/0x13a/bitcoin-arbitrage --name my-btc-arbitrage
