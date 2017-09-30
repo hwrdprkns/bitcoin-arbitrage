@@ -17,3 +17,4 @@ node_modules
 
 .webpack
 .serverless
+.DS_Store
