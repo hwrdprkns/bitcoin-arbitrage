@@ -6,9 +6,9 @@ module.exports = {
   target: 'node',
   devtool: 'source-map',
   externals: [nodeExternals({
-		whitelist: [/^aws-sdk/]
-	})],
-	module: {
+    whitelist: [/^aws-sdk/],
+  })],
+  module: {
     rules: [
       { test: /.js$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /.json$/, loader: 'json-loader' },

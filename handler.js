@@ -1,13 +1,15 @@
+const AWS = require('aws-sdk');
 const Bitstamp = require('bitstamp');
 const Kraken = require('kraken-api');
-const SNS = require('aws-sdk/clients/sns');
-const SSM = require('aws-sdk/clients/ssm');
 const Winston = require('winston');
 
 const logger = Winston.createLogger({
   transports: [new Winston.transports.Console()],
 });
 
+AWS.config.update({ region: process.env.AWS_REGION });
+const ssmClient = new AWS.SSM();
+const snsClient = new AWS.SNS();
 let KrakenClient = null;
 let BitstampClient = null;
 
@@ -73,20 +75,20 @@ export const tradePairs = async (event) => {
 
   const message = `successfully bought ${amount} and sold ${tradeVolume} of ${pair}`;
   logger.info(message);
-  return new SNS().publish({ MessageStructure: 'string', Message: message, TargetArn }).promise();
+  return snsClient.publish({ MessageStructure: 'string', Message: message, TargetArn }).promise();
 };
 
 export const loadConfigs = async () => {
   const keyspace = '/prod/bitcoin-arbitrage';
 
   if (!BitstampClient) {
-    const bitstampParams = await new SSM().getParameter({ Name: `${keyspace}/bitstamp_keys` })
+    const bitstampParams = await ssmClient.getParameter({ Name: `${keyspace}/bitstamp_keys` })
       .promise().then(data => data.Parameter.Value.split(','));
     BitstampClient = new Bitstamp(...bitstampParams);
   }
 
   if (!KrakenClient) {
-    const krakenParams = await new SSM().getParameter({ Name: `${keyspace}/kraken_keys` })
+    const krakenParams = await ssmClient.getParameter({ Name: `${keyspace}/kraken_keys` })
       .promise().then(data => data.Parameter.Value.split(','));
     KrakenClient = new Kraken(...krakenParams);
   }
@@ -94,10 +96,10 @@ export const loadConfigs = async () => {
 
 export const placeBitsampOrder = (pair, side, volume) => new Promise((resolve, reject) => {
   const handler = (err, resp) => {
-    if (err) { reject(err); }
+    if (err) { return reject(err); }
 
     logger.info(resp);
-    resolve(resp);
+    return resolve(resp);
   };
 
   if (side === 'buy') {
@@ -110,7 +112,7 @@ export const placeBitsampOrder = (pair, side, volume) => new Promise((resolve, r
 });
 
 export const getBitstampPrice = async pair => new Promise((resolve, reject) => BitstampClient.ticker(pair.toLowerCase(), (err, resp) => {
-  if (err) { reject(err); }
+  if (err) { return reject(err); }
 
   logger.info(resp);
   return resolve(resp.ask);
